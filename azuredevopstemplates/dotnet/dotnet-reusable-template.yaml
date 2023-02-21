@@ -1,0 +1,20 @@
+parameters:
+  - name: dotnetbuild
+    type: string
+    default: 'build'
+  - name: dotnetversion
+    type: string
+    default: '6.x'
+    
+jobs:
+ - job: dotnet_job
+   displayName: dotnet
+   steps:
+     - task: DotNetCoreInstaller@1
+       inputs:
+         packageType: 'sdk'
+         version: ${{ parameters.dotnetversion }}
+     - task: DotNetCoreCLI@2
+       inputs:
+         command: ${{ parameters.dotnetbuild }}
+         projects: docker-compose.dcproj
