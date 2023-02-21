@@ -6,15 +6,12 @@ parameters:
     type: string
     default: '6.x'
     
-jobs:
- - job: dotnet_job
-   displayName: dotnet
-   steps:
-     - task: DotNetCoreInstaller@1
-       inputs:
-         packageType: 'sdk'
-         version: ${{ parameters.dotnetversion }}
-     - task: DotNetCoreCLI@2
-       inputs:
-         command: ${{ parameters.dotnetbuild }}
-         projects: docker-compose.dcproj
+steps:
+  - task: DotNetCoreInstaller@1
+    inputs:
+      packageType: 'sdk'
+      version: ${{ parameters.dotnetversion }}
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: ${{ parameters.dotnetbuild }}
+      projects: docker-compose.dcproj
