@@ -1,0 +1,45 @@
+parameters:
+  - name: goals
+    displayName: goal
+    type: string
+    default: 'package'
+    values:
+      - package
+      - clean
+      - install
+      - compile
+  - name: mavenPomFile
+    displayName: pom
+    type: string
+    default: 'pom.xml'
+  - name: publishJUnitResults
+    displayName: publishresults
+    type: boolean
+    default: 'true'
+  - name: jdkVersionOption
+    displayName: version
+    type: string
+    default: '1.8'
+  - name: pathToPublish
+    type: string
+    default: gameoflife-web/target/gameoflife.war
+  
+jobs:
+ - job: maven_job
+   displayName: maven
+   steps:
+     - task: Maven@3
+       inputs:
+         mavenPomFile: "${{ parameters.mavenPomFile }}"
+         publishJUnitResults: "${{ parameters.publishJUnitResults }}"
+         testResultsFiles: '**/surefire-reports/TEST-*.xml'
+         jdkVersionOption: '1.8'
+         mavenVersionOption: path
+         mavenDirectory: /opt/maven
+         goals: "${{ parameters.goals }}"
+     - task: PublishBuildArtifacts@1
+       inputs:
+         PathToPublish: "${{ parameters.pathToPublish }}"
+         ArtifactName: 'drop'
+         publishLocation: 'Container'
+    
