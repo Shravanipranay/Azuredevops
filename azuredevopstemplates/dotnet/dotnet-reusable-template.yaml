@@ -7,7 +7,7 @@ parameters:
     default: '6.x'
   - name: targetPath
     type: string
-    default: '/home/vsts/work/1/s/docker-compose.dcproj -dl:CentralLogger'
+    default: 'docker-compose.dcproj -dl:CentralLogger'
   
     
 steps:
